@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NZWalks.API.Data;
 using NZWalks.API.Models.Domain;
 using NZWalks.API.Models.DTO;
@@ -18,10 +19,10 @@ namespace NZWalks.API.Controllers
 
         // GET ALL
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
             // Get data from database - domain models
-            var regionsDomain = dBContext.Regions.ToList();
+            var regionsDomain = await dBContext.Regions.ToListAsync();
 
             // Map domain models to DTOs
             var regionsDto = new List<RegionDTO>();
@@ -40,15 +41,16 @@ namespace NZWalks.API.Controllers
             return Ok(regionsDto);
         }
 
-        // GET REGION BY ID
+        // GET SINGLE REGION (GET by region id)
         [HttpGet]
         [Route("{id:Guid}")]
-        public IActionResult GetById([FromRoute] Guid id)
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
+            // other option:
             //var region = dBContext.Regions.Find(id);
 
             // Get region domain model from database
-            var regionDomain = dBContext.Regions.FirstOrDefault(x => x.Id == id);
+            var regionDomain = await dBContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
 
             if (regionDomain == null)
             {
@@ -69,7 +71,7 @@ namespace NZWalks.API.Controllers
 
         // POST to create new region
         [HttpPost]
-        public IActionResult Create([FromBody] AddRegionRequestDto addRegionRequestDto)
+        public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
             // Map dto to domain model
             var regionDomainModel = new Region
@@ -80,8 +82,8 @@ namespace NZWalks.API.Controllers
             };
 
             // Use domain model to create region
-            dBContext.Regions.Add(regionDomainModel);
-            dBContext.SaveChanges();
+            await dBContext.Regions.AddAsync(regionDomainModel);
+            await dBContext.SaveChangesAsync();
 
             // Map Domaind model back to Dto
             var regionDto = new RegionDTO
@@ -99,10 +101,10 @@ namespace NZWalks.API.Controllers
         // PUT - Update region
         [HttpPut]
         [Route("{id:Guid}")]
-        public IActionResult Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
             // Verify region exists
-            var regionDomainModel = dBContext.Regions.FirstOrDefault(x => x.Id == id);
+            var regionDomainModel = await dBContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
 
             if (regionDomainModel == null)
             {
@@ -114,7 +116,7 @@ namespace NZWalks.API.Controllers
             regionDomainModel.Name = updateRegionRequestDto.Name;
             regionDomainModel.RegionImageUrl = updateRegionRequestDto.RegionImageUrl;
 
-            dBContext.SaveChanges();
+            await dBContext.SaveChangesAsync();
 
             // Convert domain model to DTO
             var regionDto = new RegionDTO
@@ -131,17 +133,18 @@ namespace NZWalks.API.Controllers
         // DELETE region
         [HttpDelete]
         [Route("{id:Guid}")]
-        public IActionResult Delete([FromRoute] Guid id)
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
-            var regionDomainModel = dBContext.Regions.FirstOrDefault(x => x.Id == id);
+            var regionDomainModel = await dBContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
 
             if (regionDomainModel == null)
             {
                 return NotFound();
             }
 
+            // Remove cant be async - basically instantly anyways
             dBContext.Regions.Remove(regionDomainModel);
-            dBContext.SaveChanges();
+            await dBContext.SaveChangesAsync();
 
             return Ok();
         }

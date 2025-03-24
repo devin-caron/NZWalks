@@ -8,13 +8,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace NZWalks.API.Migrations
 {
     /// <inheritdoc />
-    public partial class Seedingdata : Migration
+    public partial class SeedingforRegionsandDifficulties : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.InsertData(
-                table: "Difficulities",
+                table: "Difficulties",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
@@ -41,17 +41,17 @@ namespace NZWalks.API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DeleteData(
-                table: "Difficulities",
+                table: "Difficulties",
                 keyColumn: "Id",
                 keyValue: new Guid("2f5e4f5c-fa1f-4ecf-ad2f-288de8d060d8"));
 
             migrationBuilder.DeleteData(
-                table: "Difficulities",
+                table: "Difficulties",
                 keyColumn: "Id",
                 keyValue: new Guid("618ef664-416c-4790-ba4a-6013f9c61005"));
 
             migrationBuilder.DeleteData(
-                table: "Difficulities",
+                table: "Difficulties",
                 keyColumn: "Id",
                 keyValue: new Guid("a00cad84-f23d-42b2-8a4d-9aad0f1d8b88"));
 

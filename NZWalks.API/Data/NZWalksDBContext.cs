@@ -10,7 +10,7 @@ namespace NZWalks.API.Data
 
         }
 
-        public DbSet<Difficulity> Difficulities { get; set; }
+        public DbSet<Difficulty> Difficulties { get; set; }
         public DbSet<Region> Regions { get; set; }
         public DbSet<Walk> Walks { get; set; }
 
@@ -21,19 +21,19 @@ namespace NZWalks.API.Data
             // Seed data for difficulties
             // Easy, Medium, Hard
 
-            var difficulties = new List<Difficulity>()
+            var difficulties = new List<Difficulty>()
             {
-                new Difficulity()
+                new Difficulty()
                 {
                     Id = Guid.Parse("a00cad84-f23d-42b2-8a4d-9aad0f1d8b88"),
                     Name = "Easy"
                 },
-                new Difficulity()
+                new Difficulty()
                 {
                     Id = Guid.Parse("2f5e4f5c-fa1f-4ecf-ad2f-288de8d060d8"),
                     Name = "Medium"
                 },
-                new Difficulity()
+                new Difficulty()
                 {
                     Id = Guid.Parse("618ef664-416c-4790-ba4a-6013f9c61005"),
                     Name = "Hard"
@@ -41,7 +41,7 @@ namespace NZWalks.API.Data
             };
 
             // Seed difficulties to the database
-            modelBuilder.Entity<Difficulity>().HasData(difficulties);
+            modelBuilder.Entity<Difficulty>().HasData(difficulties);
 
 
             // Seed data for Regions

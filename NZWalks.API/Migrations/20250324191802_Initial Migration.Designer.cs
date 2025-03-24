@@ -12,8 +12,8 @@ using NZWalks.API.Data;
 namespace NZWalks.API.Migrations
 {
     [DbContext(typeof(NZWalksDBContext))]
-    [Migration("20250324175012_Seeding data")]
-    partial class Seedingdata
+    [Migration("20250324191802_Initial Migration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace NZWalks.API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("NZWalks.API.Models.Domain.Difficulity", b =>
+            modelBuilder.Entity("NZWalks.API.Models.Domain.Difficulty", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -37,24 +37,7 @@ namespace NZWalks.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Difficulities");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("a00cad84-f23d-42b2-8a4d-9aad0f1d8b88"),
-                            Name = "Easy"
-                        },
-                        new
-                        {
-                            Id = new Guid("2f5e4f5c-fa1f-4ecf-ad2f-288de8d060d8"),
-                            Name = "Medium"
-                        },
-                        new
-                        {
-                            Id = new Guid("618ef664-416c-4790-ba4a-6013f9c61005"),
-                            Name = "Hard"
-                        });
+                    b.ToTable("Difficulties");
                 });
 
             modelBuilder.Entity("NZWalks.API.Models.Domain.Region", b =>
@@ -77,47 +60,6 @@ namespace NZWalks.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Regions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("f7248fc3-2585-4efb-8d1d-1c555f4087f6"),
-                            Code = "AKL",
-                            Name = "Auckland",
-                            RegionImageUrl = "https://images.pexels.com/photos/5169056/pexels-photo-5169056.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                        },
-                        new
-                        {
-                            Id = new Guid("6884f7d7-ad1f-4101-8df3-7a6fa7387d81"),
-                            Code = "NTL",
-                            Name = "Northland"
-                        },
-                        new
-                        {
-                            Id = new Guid("14ceba71-4b51-4777-9b17-46602cf66153"),
-                            Code = "BOP",
-                            Name = "Bay Of Plenty"
-                        },
-                        new
-                        {
-                            Id = new Guid("cfa06ed2-bf65-4b65-93ed-c9d286ddb0de"),
-                            Code = "WGN",
-                            Name = "Wellington",
-                            RegionImageUrl = "https://images.pexels.com/photos/4350631/pexels-photo-4350631.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                        },
-                        new
-                        {
-                            Id = new Guid("58c91135-ef22-4e85-a5b9-1185e61a37db"),
-                            Code = "NSN",
-                            Name = "Nelson",
-                            RegionImageUrl = "https://images.pexels.com/photos/13918194/pexels-photo-13918194.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                        },
-                        new
-                        {
-                            Id = new Guid("88cf53c6-904f-435b-a9c2-9e057ba1157e"),
-                            Code = "STL",
-                            Name = "Southland"
-                        });
                 });
 
             modelBuilder.Entity("NZWalks.API.Models.Domain.Walk", b =>
@@ -130,10 +72,7 @@ namespace NZWalks.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("DifficulityId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("DiffucultyId")
+                    b.Property<Guid>("DifficultyId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("LengthInKm")
@@ -151,7 +90,7 @@ namespace NZWalks.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DifficulityId");
+                    b.HasIndex("DifficultyId");
 
                     b.HasIndex("RegionId");
 
@@ -160,9 +99,9 @@ namespace NZWalks.API.Migrations
 
             modelBuilder.Entity("NZWalks.API.Models.Domain.Walk", b =>
                 {
-                    b.HasOne("NZWalks.API.Models.Domain.Difficulity", "Difficulity")
+                    b.HasOne("NZWalks.API.Models.Domain.Difficulty", "Difficulty")
                         .WithMany()
-                        .HasForeignKey("DifficulityId")
+                        .HasForeignKey("DifficultyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -172,7 +111,7 @@ namespace NZWalks.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Difficulity");
+                    b.Navigation("Difficulty");
 
                     b.Navigation("Region");
                 });

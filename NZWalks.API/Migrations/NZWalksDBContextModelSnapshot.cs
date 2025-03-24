@@ -22,7 +22,7 @@ namespace NZWalks.API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("NZWalks.API.Models.Domain.Difficulity", b =>
+            modelBuilder.Entity("NZWalks.API.Models.Domain.Difficulty", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -34,7 +34,7 @@ namespace NZWalks.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Difficulities");
+                    b.ToTable("Difficulties");
 
                     b.HasData(
                         new
@@ -127,10 +127,7 @@ namespace NZWalks.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("DifficulityId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("DiffucultyId")
+                    b.Property<Guid>("DifficultyId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("LengthInKm")
@@ -148,7 +145,7 @@ namespace NZWalks.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DifficulityId");
+                    b.HasIndex("DifficultyId");
 
                     b.HasIndex("RegionId");
 
@@ -157,9 +154,9 @@ namespace NZWalks.API.Migrations
 
             modelBuilder.Entity("NZWalks.API.Models.Domain.Walk", b =>
                 {
-                    b.HasOne("NZWalks.API.Models.Domain.Difficulity", "Difficulity")
+                    b.HasOne("NZWalks.API.Models.Domain.Difficulty", "Difficulty")
                         .WithMany()
-                        .HasForeignKey("DifficulityId")
+                        .HasForeignKey("DifficultyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -169,7 +166,7 @@ namespace NZWalks.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Difficulity");
+                    b.Navigation("Difficulty");
 
                     b.Navigation("Region");
                 });

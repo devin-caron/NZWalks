@@ -12,7 +12,7 @@ namespace NZWalks.API.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Difficulities",
+                name: "Difficulties",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -20,7 +20,7 @@ namespace NZWalks.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Difficulities", x => x.Id);
+                    table.PrimaryKey("PK_Difficulties", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -46,17 +46,16 @@ namespace NZWalks.API.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LengthInKm = table.Column<double>(type: "float", nullable: false),
                     WalkImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DiffucultyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RegionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DifficulityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    DifficultyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RegionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Walks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Walks_Difficulities_DifficulityId",
-                        column: x => x.DifficulityId,
-                        principalTable: "Difficulities",
+                        name: "FK_Walks_Difficulties_DifficultyId",
+                        column: x => x.DifficultyId,
+                        principalTable: "Difficulties",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -68,9 +67,9 @@ namespace NZWalks.API.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Walks_DifficulityId",
+                name: "IX_Walks_DifficultyId",
                 table: "Walks",
-                column: "DifficulityId");
+                column: "DifficultyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Walks_RegionId",
@@ -85,7 +84,7 @@ namespace NZWalks.API.Migrations
                 name: "Walks");
 
             migrationBuilder.DropTable(
-                name: "Difficulities");
+                name: "Difficulties");
 
             migrationBuilder.DropTable(
                 name: "Regions");

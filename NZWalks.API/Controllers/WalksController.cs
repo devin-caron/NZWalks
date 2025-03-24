@@ -19,8 +19,6 @@ namespace NZWalks.API.Controllers
             this.walkRepository = walkRepository;
         }
 
-        public IMapper Mapper { get; }
-
         // POST - Create Walk
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] AddWalkRequestDto addWalkRequestDto)
